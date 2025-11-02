@@ -1,3 +1,7 @@
+### INF601 - Advanced Programming in Python
+### Jeremy McKowski
+### Mini Project 3
+
 import functools
 
 from flask import (

@@ -7,6 +7,7 @@
 
 * This project will be using Flask to deploy a small web app for storing a movies/film database information
 * I followed the tutorial then updated for the main project**
+* Commits after 2PM 2 NOV 2025 are the project itself, I did the tutorial to show I did follow along with the class.
  
 ## Description
  

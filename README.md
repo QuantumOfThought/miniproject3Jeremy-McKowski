@@ -28,12 +28,20 @@ An in-depth paragraph about your project and overview of use.
 * How to run the program
 * Step-by-step bullets
 ```
-code blocks for commands
+pip install -r requirements.txt
 ```
- 
+
+```
+flask --app flaskr init-db
+```
+
+```
+flask --app flaskr run
+```
+
 ## Help
  
-Any advise for common problems or issues.
+Any advice for common problems or issues.
 ```
 command to run if program contains helper info
 ```

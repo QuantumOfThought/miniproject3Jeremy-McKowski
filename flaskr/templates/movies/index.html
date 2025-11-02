@@ -2,36 +2,56 @@
 
 {% block header %}
   <div class="d-flex justify-content-between align-items-center mb-3">
-    <h1 class="mb-0">{% block title %}Posts{% endblock %}</h1>
+    <h1 class="mb-0">{% block title %}My Movies{% endblock %}</h1>
     {% if g.user %}
-      <a class="btn btn-primary" href="{{ url_for('blog.create') }}">New Post</a>
+      <a class="btn btn-primary" href="{{ url_for('movies.create') }}">Add Movie</a>
     {% endif %}
   </div>
 {% endblock %}
 
 {% block content %}
-  {% if posts %}
-    <div class="accordion" id="postsAccordion">
-      {% for post in posts %}
+  {% if movies %}
+    <div class="accordion" id="moviesAccordion">
+      {% for movie in movies %}
         <div class="accordion-item">
-          <h2 class="accordion-header" id="heading{{ post['id'] }}">
+          <h2 class="accordion-header" id="heading{{ movie['id'] }}">
             <button class="accordion-button {% if not loop.first %}collapsed{% endif %}" type="button"
-                    data-bs-toggle="collapse" data-bs-target="#collapse{{ post['id'] }}"
+                    data-bs-toggle="collapse" data-bs-target="#collapse{{ movie['id'] }}"
                     aria-expanded="{{ 'true' if loop.first else 'false' }}"
-                    aria-controls="collapse{{ post['id'] }}">
-              {{ post['title'] }}
+                    aria-controls="collapse{{ movie['id'] }}">
+              {{ movie['title'] }}
+              <span class="ms-2 text-warning">
+                {% for i in range(movie['rating']) %}★{% endfor %}
+                {% for i in range(5 - movie['rating']) %}☆{% endfor %}
+              </span>
             </button>
           </h2>
-          <div id="collapse{{ post['id'] }}"
+          <div id="collapse{{ movie['id'] }}"
                class="accordion-collapse collapse {% if loop.first %}show{% endif %}"
-               aria-labelledby="heading{{ post['id'] }}" data-bs-parent="#postsAccordion">
+               aria-labelledby="heading{{ movie['id'] }}" data-bs-parent="#moviesAccordion">
             <div class="accordion-body">
               <div class="mb-2 text-muted small">
-                by <strong>{{ post['username'] }}</strong> on {{ post['created'].strftime('%Y-%m-%d') }}
+                Watched by <strong>{{ movie['username'] }}</strong> on {{ movie['date_watched'] }}
               </div>
-              <p>{{ post['body'] }}</p>
-              {% if g.user and g.user['id'] == post['author_id'] %}
-                <a href="{{ url_for('blog.update', id=post['id']) }}" class="btn btn-sm btn-outline-secondary">
+              
+              <div class="mb-2">
+                <strong>Rating:</strong> 
+                <span class="text-warning">
+                  {% for i in range(movie['rating']) %}★{% endfor %}
+                  {% for i in range(5 - movie['rating']) %}☆{% endfor %}
+                </span>
+                ({{ movie['rating'] }}/5)
+              </div>
+              
+              {% if movie['notes'] %}
+                <div class="mb-3">
+                  <strong>Notes:</strong>
+                  <p>{{ movie['notes'] }}</p>
+                </div>
+              {% endif %}
+              
+              {% if g.user and g.user['id'] == movie['author_id'] %}
+                <a href="{{ url_for('movies.update', id=movie['id']) }}" class="btn btn-sm btn-outline-secondary">
                   Edit
                 </a>
               {% endif %}
@@ -42,7 +62,7 @@
     </div>
   {% else %}
     <div class="alert alert-info mt-4" role="alert">
-      No posts yet — <a href="{{ url_for('blog.create') }}" class="alert-link">create one now!</a>
+      No movies logged yet — <a href="{{ url_for('movies.create') }}" class="alert-link">add one now!</a>
     </div>
   {% endif %}
 {% endblock %}

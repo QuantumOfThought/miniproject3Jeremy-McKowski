@@ -20,7 +20,7 @@ def index():
         ' FROM movie m JOIN user u ON m.author_id = u.id'
         ' ORDER BY date_watched DESC'
     ).fetchall()
-    return render_template('movies/index.html', movies=movies)
+    return render_template('movies/index_blog.html', movies=movies)
 
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
@@ -51,7 +51,7 @@ def create():
             db.commit()
             return redirect(url_for('movies.index'))
 
-    return render_template('movies/create.html')
+    return render_template('movies/create_blog_post.html')
 
 def get_movie(id, check_author=True):
     movie = get_db().execute(
@@ -100,7 +100,7 @@ def update(id):
             db.commit()
             return redirect(url_for('movies.index'))
 
-    return render_template('movies/update.html', movie=movie)
+    return render_template('movies/update_blog.html', movie=movie)
 
 @bp.route('/<int:id>/delete', methods=('POST',))
 @login_required

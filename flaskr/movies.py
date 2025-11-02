@@ -51,7 +51,7 @@ def create():
             db.commit()
             return redirect(url_for('movies.index'))
 
-    return render_template('movies/create.html', movies=movies)
+    return render_template('movies/create.html')
 
 def get_movie(id, check_author=True):
     movie = get_db().execute(
